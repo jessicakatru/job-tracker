@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Job Tracker</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- NAVBAR -->
+   <nav> 
+      <h1>🎯 Job Tracker</h1>
+      <div style="display:flex; gap:10px;">
+        <button class="theme-toggle" onclick="toggleTheme()">☀️ Light Mode</button>
+        <button class="theme-toggle" onclick="logout()">🚪 Logout</button>
+      </div>
+    </nav>
+
+    <!-- DASHBOARD STATS -->
+    <section class="dashboard">
+        <div class="stat-card">
+            <h3 id="total-count">0</h3>
+            <p>Total Applied</p>
+        </div>
+        <div class="stat-card">
+            <h3 id="interview-count">0</h3>
+            <p>Interviews</p>
+        </div>
+        <div class="stat-card">
+            <h3 id="offer-count">0</h3>
+            <p>Offers</p>
+        </div>
+    </section>
+
+    <!-- ADD JOB FORM -->
+    <section class="add-job">
+        <h2>Add New Application</h2>
+        <div class="form-group">
+            <input type="text" id="company" placeholder="Company Name" />
+            <input type="text" id="role" placeholder="Role / Position" />
+            <input type="date" id="date-applied" />
+            <select id="status">
+                <option value="Applied">Applied</option>
+                <option value="Interview">Interview</option>
+                <option value="Offer">Offer</option>
+                <option value="Rejected">Rejected</option>
+            </select>
+            <input type="text" id="notes" placeholder="Notes (optional)" />
+            <button onclick="addJob()">+ Add Job</button>
+        </div>
+    </section>
+
+    <!-- JOB LIST -->
+  <section class="job-list">
+    <h2>My Applications</h2>
+    <div class="filter-buttons">
+        <button class="filter-btn active" onclick="filterJobs('All')">All</button>
+        <button class="filter-btn" onclick="filterJobs('Applied')">Applied</button>
+        <button class="filter-btn" onclick="filterJobs('Interview')">Interview</button>
+        <button class="filter-btn" onclick="filterJobs('Offer')">Offer</button>
+        <button class="filter-btn" onclick="filterJobs('Rejected')">Rejected</button>
+    </div>
+    <div id="jobs-container"></div>
+  </section>
+    <script src="script.js"></script>
+</body>
+</html>

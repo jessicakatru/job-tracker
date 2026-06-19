@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up - Job Tracker</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            min-height: 100vh;
+            display: flex;
+        }
+
+        .brand-panel {
+            flex: 1;
+            background: linear-gradient(160deg, #2e1a0e 0%, #4a2e1a 55%, #6b4226 100%);
+            color: #f5ead8;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 60px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .brand-panel::before {
+            content: '';
+            position: absolute;
+            width: 500px;
+            height: 500px;
+            border-radius: 50%;
+            background: radial-gradient(circle, #c9a87c22 0%, transparent 70%);
+            top: -150px;
+            right: -150px;
+        }
+
+        .brand-panel::after {
+            content: '';
+            position: absolute;
+            width: 350px;
+            height: 350px;
+            border-radius: 50%;
+            background: radial-gradient(circle, #c9a87c1a 0%, transparent 70%);
+            bottom: -100px;
+            left: -100px;
+        }
+
+        .brand-logo {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: #c9a87c;
+            letter-spacing: 0.5px;
+            margin-bottom: 80px;
+            z-index: 1;
+        }
+
+        .brand-headline {
+            font-size: 2.6rem;
+            font-weight: 700;
+            line-height: 1.25;
+            margin-bottom: 20px;
+            z-index: 1;
+            max-width: 480px;
+        }
+
+        .brand-headline span {
+            color: #c9a87c;
+        }
+
+        .brand-sub {
+            font-size: 1.05rem;
+            color: #d9c4a3;
+            max-width: 420px;
+            line-height: 1.6;
+            z-index: 1;
+            margin-bottom: 50px;
+        }
+
+        .stage-track {
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+            z-index: 1;
+        }
+
+        .stage-item {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            color: #d9c4a3;
+            font-size: 0.95rem;
+        }
+
+        .stage-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: #c9a87c;
+            flex-shrink: 0;
+        }
+
+        .stage-item:nth-child(2) .stage-dot { opacity: 0.7; }
+        .stage-item:nth-child(3) .stage-dot { opacity: 0.4; }
+
+        .form-panel {
+            flex: 1;
+            background: #f5ead8;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px;
+        }
+
+        .form-wrap {
+            width: 100%;
+            max-width: 380px;
+        }
+
+        .form-wrap h1 {
+            font-size: 2rem;
+            color: #2e1a0e;
+            margin-bottom: 8px;
+            font-weight: 700;
+        }
+
+        .form-wrap p.sub {
+            color: #7a5230;
+            margin-bottom: 36px;
+            font-size: 0.95rem;
+        }
+
+        .field-label {
+            display: block;
+            font-size: 0.82rem;
+            font-weight: 600;
+            color: #4a2e1a;
+            margin-bottom: 6px;
+        }
+
+        .auth-input {
+            width: 100%;
+            background: #ffffff;
+            border: 1.5px solid #c9a87c55;
+            border-radius: 10px;
+            padding: 13px 16px;
+            color: #2e1a0e;
+            font-size: 0.95rem;
+            margin-bottom: 20px;
+            outline: none;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+
+        .auth-input:focus {
+            border-color: #a07850;
+            box-shadow: 0 0 0 3px #a0785022;
+        }
+
+        .auth-btn {
+            width: 100%;
+            background: #4a2e1a;
+            color: #f5ead8;
+            border: none;
+            border-radius: 10px;
+            padding: 14px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s, transform 0.15s;
+            margin-top: 6px;
+        }
+
+        .auth-btn:hover {
+            background: #6b4226;
+        }
+
+        .auth-btn:active {
+            transform: scale(0.98);
+        }
+
+        .auth-link {
+            text-align: center;
+            margin-top: 26px;
+            color: #7a5230;
+            font-size: 0.9rem;
+        }
+
+        .auth-link a {
+            color: #4a2e1a;
+            font-weight: 700;
+            text-decoration: none;
+        }
+
+        .auth-link a:hover {
+            text-decoration: underline;
+        }
+
+        .error-msg {
+            background: #fbe4e2;
+            color: #b3261e;
+            border: 1px solid #e8a8a3;
+            border-radius: 8px;
+            padding: 11px 14px;
+            font-size: 0.85rem;
+            margin-bottom: 18px;
+            display: none;
+        }
+
+        .success-msg {
+            background: #e3f2e1;
+            color: #2e7d32;
+            border: 1px solid #a5d6a7;
+            border-radius: 8px;
+            padding: 11px 14px;
+            font-size: 0.85rem;
+            margin-bottom: 18px;
+            display: none;
+        }
+
+        @media (max-width: 860px) {
+            .brand-panel { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="brand-panel">
+        <div class="brand-logo">🎯 JOB TRACKER</div>
+        <div class="brand-headline">Start tracking <span>today.</span></div>
+        <p class="brand-sub">Create your free account and never lose track of an application again. Your job search, organized.</p>
+        <div class="stage-track">
+            <div class="stage-item"><span class="stage-dot"></span> Applied</div>
+            <div class="stage-item"><span class="stage-dot"></span> Interviewing</div>
+            <div class="stage-item"><span class="stage-dot"></span> Offer</div>
+        </div>
+    </div>
+
+    <div class="form-panel">
+        <div class="form-wrap">
+            <h1>Create account</h1>
+            <p class="sub">Start organizing your job search</p>
+
+            <div class="error-msg" id="error-msg"></div>
+            <div class="success-msg" id="success-msg"></div>
+
+            <label class="field-label">Full Name</label>
+            <input type="text" class="auth-input" id="name" placeholder="Jessica Katru" />
+
+            <label class="field-label">Email</label>
+            <input type="email" class="auth-input" id="email" placeholder="you@example.com" />
+
+            <label class="field-label">Password</label>
+            <input type="password" class="auth-input" id="password" placeholder="Create a password" />
+
+            <button class="auth-btn" id="signup-btn">Sign Up</button>
+
+            <div class="auth-link">
+                Already have an account? <a href="login.html">Log in</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        if (localStorage.getItem('token')) {
+            window.location.href = 'index.html';
+        }
+
+        document.getElementById('signup-btn').addEventListener('click', async function() {
+            const name = document.getElementById('name').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const password = document.getElementById('password').value.trim();
+
+            if (!name || !email || !password) {
+                showError('Please fill in all fields!');
+                return;
+            }
+
+            try {
+                const res = await fetch('http://127.0.0.1:5000/signup', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ name, email, password })
+                });
+
+                const data = await res.json();
+
+                if (res.ok) {
+                    showSuccess('Account created! Redirecting to login...');
+                    setTimeout(() => {
+                        window.location.href = 'login.html';
+                    }, 1500);
+                } else {
+                    showError(data.error);
+                }
+            } catch (err) {
+                showError('Cannot connect to server. Is backend running?');
+            }
+        });
+
+        function showError(msg) {
+            const el = document.getElementById('error-msg');
+            el.textContent = msg;
+            el.style.display = 'block';
+            document.getElementById('success-msg').style.display = 'none';
+        }
+
+        function showSuccess(msg) {
+            const el = document.getElementById('success-msg');
+            el.textContent = msg;
+            el.style.display = 'block';
+            document.getElementById('error-msg').style.display = 'none';
+        }
+    </script>
+</body>
+</html>

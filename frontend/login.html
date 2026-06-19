@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Job Tracker</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            min-height: 100vh;
+            display: flex;
+        }
+
+        /* LEFT PANEL */
+        .brand-panel {
+            flex: 1;
+            background: linear-gradient(160deg, #2e1a0e 0%, #4a2e1a 55%, #6b4226 100%);
+            color: #f5ead8;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 60px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .brand-panel::before {
+            content: '';
+            position: absolute;
+            width: 500px;
+            height: 500px;
+            border-radius: 50%;
+            background: radial-gradient(circle, #c9a87c22 0%, transparent 70%);
+            top: -150px;
+            right: -150px;
+        }
+
+        .brand-panel::after {
+            content: '';
+            position: absolute;
+            width: 350px;
+            height: 350px;
+            border-radius: 50%;
+            background: radial-gradient(circle, #c9a87c1a 0%, transparent 70%);
+            bottom: -100px;
+            left: -100px;
+        }
+
+        .brand-logo {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: #c9a87c;
+            letter-spacing: 0.5px;
+            margin-bottom: 80px;
+            z-index: 1;
+        }
+
+        .brand-headline {
+            font-size: 2.6rem;
+            font-weight: 700;
+            line-height: 1.25;
+            margin-bottom: 20px;
+            z-index: 1;
+            max-width: 480px;
+        }
+
+        .brand-headline span {
+            color: #c9a87c;
+        }
+
+        .brand-sub {
+            font-size: 1.05rem;
+            color: #d9c4a3;
+            max-width: 420px;
+            line-height: 1.6;
+            z-index: 1;
+            margin-bottom: 50px;
+        }
+
+        .stage-track {
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+            z-index: 1;
+        }
+
+        .stage-item {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            color: #d9c4a3;
+            font-size: 0.95rem;
+        }
+
+        .stage-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: #c9a87c;
+            flex-shrink: 0;
+        }
+
+        .stage-item:nth-child(2) .stage-dot { opacity: 0.7; }
+        .stage-item:nth-child(3) .stage-dot { opacity: 0.4; }
+
+        /* RIGHT PANEL */
+        .form-panel {
+            flex: 1;
+            background: #f5ead8;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px;
+        }
+
+        .form-wrap {
+            width: 100%;
+            max-width: 380px;
+        }
+
+        .form-wrap h1 {
+            font-size: 2rem;
+            color: #2e1a0e;
+            margin-bottom: 8px;
+            font-weight: 700;
+        }
+
+        .form-wrap p.sub {
+            color: #7a5230;
+            margin-bottom: 36px;
+            font-size: 0.95rem;
+        }
+
+        .field-label {
+            display: block;
+            font-size: 0.82rem;
+            font-weight: 600;
+            color: #4a2e1a;
+            margin-bottom: 6px;
+        }
+
+        .auth-input {
+            width: 100%;
+            background: #ffffff;
+            border: 1.5px solid #c9a87c55;
+            border-radius: 10px;
+            padding: 13px 16px;
+            color: #2e1a0e;
+            font-size: 0.95rem;
+            margin-bottom: 20px;
+            outline: none;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+
+        .auth-input:focus {
+            border-color: #a07850;
+            box-shadow: 0 0 0 3px #a0785022;
+        }
+
+        .auth-btn {
+            width: 100%;
+            background: #4a2e1a;
+            color: #f5ead8;
+            border: none;
+            border-radius: 10px;
+            padding: 14px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s, transform 0.15s;
+            margin-top: 6px;
+        }
+
+        .auth-btn:hover {
+            background: #6b4226;
+        }
+
+        .auth-btn:active {
+            transform: scale(0.98);
+        }
+
+        .auth-link {
+            text-align: center;
+            margin-top: 26px;
+            color: #7a5230;
+            font-size: 0.9rem;
+        }
+
+        .auth-link a {
+            color: #4a2e1a;
+            font-weight: 700;
+            text-decoration: none;
+        }
+
+        .auth-link a:hover {
+            text-decoration: underline;
+        }
+
+        .error-msg {
+            background: #fbe4e2;
+            color: #b3261e;
+            border: 1px solid #e8a8a3;
+            border-radius: 8px;
+            padding: 11px 14px;
+            font-size: 0.85rem;
+            margin-bottom: 18px;
+            display: none;
+        }
+
+        @media (max-width: 860px) {
+            .brand-panel { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="brand-panel">
+        <div class="brand-logo">🎯 JOB TRACKER</div>
+        <div class="brand-headline">Every application, <span>one place.</span></div>
+        <p class="brand-sub">Stop losing track of where you applied. See your whole job search at a glance, from first application to final offer.</p>
+        <div class="stage-track">
+            <div class="stage-item"><span class="stage-dot"></span> Applied</div>
+            <div class="stage-item"><span class="stage-dot"></span> Interviewing</div>
+            <div class="stage-item"><span class="stage-dot"></span> Offer</div>
+        </div>
+    </div>
+
+    <div class="form-panel">
+        <div class="form-wrap">
+            <h1>Welcome back</h1>
+            <p class="sub">Log in to see your applications</p>
+
+            <div class="error-msg" id="error-msg"></div>
+
+            <label class="field-label">Email</label>
+            <input type="email" class="auth-input" id="email" placeholder="you@example.com" />
+
+            <label class="field-label">Password</label>
+            <input type="password" class="auth-input" id="password" placeholder="Enter your password" />
+
+            <button class="auth-btn" id="login-btn">Log In</button>
+
+            <div class="auth-link">
+                New here? <a href="signup.html">Create an account</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        if (localStorage.getItem('token')) {
+            window.location.href = 'index.html';
+        }
+
+        document.getElementById('login-btn').addEventListener('click', async function() {
+            const email = document.getElementById('email').value.trim();
+            const password = document.getElementById('password').value.trim();
+
+            if (!email || !password) {
+                showError('Please enter email and password!');
+                return;
+            }
+
+            try {
+                const res = await fetch('http://127.0.0.1:5000/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email, password })
+                });
+
+                const data = await res.json();
+
+                if (res.ok) {
+                    localStorage.setItem('token', data.token);
+                    localStorage.setItem('name', data.name);
+                    window.location.href = 'index.html';
+                } else {
+                    showError(data.error);
+                }
+            } catch (err) {
+                showError('Cannot connect to server. Is backend running?');
+            }
+        });
+
+        function showError(msg) {
+            const el = document.getElementById('error-msg');
+            el.textContent = msg;
+            el.style.display = 'block';
+        }
+    </script>
+</body>
+</html>
