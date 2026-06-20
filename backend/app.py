@@ -1,3 +1,4 @@
+import os
 import certifi
 from flask import Flask, request, jsonify
 from flask_cors import CORS
@@ -9,11 +10,12 @@ import datetime
 app = Flask(__name__)
 CORS(app)
 
-# Secret key for JWT
-SECRET_KEY = "jobtracker_secret_123"
+# Secret key for JWT (from environment variable)
+SECRET_KEY = os.environ.get("JWT_SECRET_KEY", "jobtracker_secret_123")
 
-# MongoDB connection
-client = MongoClient("mongodb+srv://jessicakatru05_db_user:4SY2HjQbT2SMz1al@cluster0.ts0p7vg.mongodb.net/?appName=Cluster0", tlsCAFile=certifi.where())
+# MongoDB connection (from environment variable)
+MONGO_URI = os.environ.get("MONGO_URI")
+client = MongoClient(MONGO_URI, tlsCAFile=certifi.where())
 db = client["jobtracker"]
 users_collection = db["users"]
 jobs_collection = db["jobs"]
@@ -162,4 +164,5 @@ def delete_job(job_id):
 
 
 if __name__ == "__main__":
-    app.run(debug=True, port=5000)
+    port = int(os.environ.get("PORT", 5000))
+    app.run(debug=True, host="0.0.0.0", port=port)
