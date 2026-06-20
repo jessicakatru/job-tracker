@@ -249,6 +249,8 @@
     </div>
 
     <script>
+        const API_URL = 'https://job-tracker-backend-0mwn.onrender.com';
+
         if (localStorage.getItem('token')) {
             window.location.href = 'index.html';
         }
@@ -263,7 +265,7 @@
             }
 
             try {
-                const res = await fetch('http://127.0.0.1:5000/login', {
+                const res = await fetch(`${API_URL}/login`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ email, password })

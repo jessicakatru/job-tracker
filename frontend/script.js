@@ -1,4 +1,4 @@
-const API_URL = 'http://127.0.0.1:5000';
+const API_URL = 'https://job-tracker-backend-0mwn.onrender.com';
 
 // Protect this page - redirect to login if no token
 const token = localStorage.getItem('token');
